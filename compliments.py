@@ -48,10 +48,10 @@ def createImage():
           i = i - 1
        message1 = message[0:i]
        message2 = message[i+1:-1]
-       drawMessage(img, 10,10, message1)
-       drawMessage(img, 10,500, message2)
+       drawMessage(img, 10,400, message1)
+       drawMessage(img, 10,450, message2)
     else:
-       drawMessage(img, 10,10, message)
+       drawMessage(img, 10,450, message)
     img.save('test.jpg')
 
 def tweet():
