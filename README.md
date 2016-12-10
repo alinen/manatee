@@ -15,6 +15,6 @@ pip install Pillow
 ```
 
 References:
-- [Twitter API](https://dev.twitter.com/rest/reference_
+- [Twitter API](https://dev.twitter.com/rest/reference)
 - [Python requests](http://docs.python-requests.org/en/master/)
 - [Python Pillow image library](https://python-pillow.org/)
