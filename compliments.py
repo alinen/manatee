@@ -21,8 +21,47 @@ def drawMessage(img, x, y, msg):
     draw.text((x+1, y+1), msg, font=font, fill=strokec)
     draw.text((x, y), msg, font=font, fill=fillc)
 
+def getCurrent():
+    if os.path.isfile("current.txt"):
+       f = open("current.txt", "r")
+       lines = f.readlines()
+       current = int(lines[0])
+       f.close()
+       return current
+    return 0
+
+def setNext(nextIdx):
+    f = open("current.txt", "w")
+    f.writelines("%d\n"%nextIdx)
+    f.close()
+
+def generateComplimentOrder(numCompliments):
+    values = range(0,numCompliments)
+    random.shuffle(values)
+    f = open("order.txt", "w")
+    for v in values:
+       f.writelines("%d\n"%v)
+    f.close()
+
+def getComplimentId(current, numCompliments):
+    if not os.path.isfile("order.txt"):
+       generateComplimentOrder(numCompliments)
+
+    print current, numCompliments
+    f = open("order.txt", "r")
+    valueStrings = f.readlines()
+    v = int(valueStrings[current])
+    f.close()
+    return v
+
 def createImage():
     random.seed(time.time())
+
+    # open message
+    f = open("compliments.txt", "r")
+    compliments = f.readlines()
+    numCompliments = len(compliments)
+    f.close()
 
     # open random image
     files = os.listdir("pics")
@@ -30,11 +69,14 @@ def createImage():
     idx = random.randint(0, len(names)-1)
     name = names[idx]
 
-    # open message
-    f = open("compliments.txt", "r")
-    compliments = f.readlines()
-    f.close()
-    idx = random.randint(0, len(compliments)-1)    
+    # get manatee state
+    current = getCurrent()
+    if current > numCompliments-1:
+       generateComplimentOrder(numCompliments)
+       current = 0
+    idx = getComplimentId(current, numCompliments)
+    setNext(current+1)
+
     message = string.strip(compliments[idx])
 
     print name
